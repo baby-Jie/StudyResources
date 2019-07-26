@@ -1,0 +1,11 @@
+*.exe
+*.dll
+*.lib
+*.user
+
+bin/
+obj/
+Release/
+Debug/
+packages/
+.vs/
