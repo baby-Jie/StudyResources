@@ -101,6 +101,7 @@ namespace CommonUtil.Utils.IOUtils
             if (Directory.Exists(dir))
             {
                 DeleteFolder(dir);
+
                 Directory.Delete(dir); // 只能删除空目录
             }
         }
