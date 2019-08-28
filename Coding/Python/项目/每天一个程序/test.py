@@ -1,11 +1,13 @@
-def f(n):
-    if (n==1):
-        result =0
-    elif (n==2):
-        result=1
-    else :
-        result =f(n-1)+f(n-2)
-    return result
+import multiprocessing 
+import time
 
-n=int(input("请输入一个数:"))
-print(f(n))
+def sing():
+    for i in range(3):
+        print("i am sing")
+        time.sleep(1)
+
+pro1 = multiprocessing.Process(target = sing)
+pro1.start()
+
+
+print("hello python")
