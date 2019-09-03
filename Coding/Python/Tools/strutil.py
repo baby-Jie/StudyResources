@@ -7,9 +7,9 @@ def str2list(string:str):
 
 
 # 对字符串进行排序
-def strSort(string:str):
+def strSort(string:str, reverse = False):
     li = str2list(string)
-    li.sort()
+    li.sort(reverse = reverse)
     return "".join(li)
 
 
