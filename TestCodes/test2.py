@@ -1,16 +1,5 @@
-# leetcode 226. 翻转二叉树
-
-class TreeNode:
-    def __init__(self, x):
-        self.val = x
-        self.left = None
-        self.right = None
 
 class Solution:
-    def invertTree(self, root: TreeNode) -> TreeNode:
-        if root == None:
-            return None
-        leftNode = root.left
-        root.left = self.invertTree(root.right)
-        root.right = self.invertTree(leftNode)
-        return root
+    def lengthOfLongestSubstring(self, s: str) -> int:
+        
+        return 1
