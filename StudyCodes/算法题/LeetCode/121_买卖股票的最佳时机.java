@@ -16,3 +16,7 @@ class Solution {
         return maxPrice;
     }
 }
+
+/**
+ * 方法二：
+ */
