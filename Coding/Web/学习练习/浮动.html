@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>浮动1</title>
+    <style type="text/css">
+        .box {
+            width: 400px;
+            height: 80px;
+            border: 1px solid red;
+        }
+
+        .subbox {
+            width: 60px;
+            height: 60px;
+        }
+
+        .subbox1 {
+            background-color: #90ee90;
+            float: left;
+            margin: 10px 0px 0px 10px;
+        }
+
+        .subbox2 {
+            background-color: pink;
+            float: right;
+            margin: 10px 10px 0px 0px;
+        }
+
+        .box2 {
+            width: 400px;
+            height: 40px;
+            border-bottom: 1px solid #ff8200;
+        }
+
+        .subbox3 {
+            width: 80px;
+            height: 40px;
+            float: left;
+            background-color: #ff8200;
+            font: normal 16px/40px "微软雅黑";
+            text-align: center;
+        }
+
+        .subbox4 {
+            color: #666;
+            font-size: 14px;
+            float: right;
+            line-height: 40px;
+        }
+
+        .box3 {
+            height: 50px;
+            width: 694px;
+            margin-top: 10px;
+        }
+
+        .subbox5 {
+            float: left;
+            width: 98px;
+            height: 48px;
+            color: pink;
+            font: normal 16px/48px '微软雅黑';
+            text-align: center;
+            border: 1px solid gold;
+            border-right: 0px;
+        }
+
+        .subbox6 {
+            border-right: 1px solid gold;
+        }
+
+        .subbox5:hover {
+            cursor: pointer;
+            background-color: gold;
+        }
+
+        .box4 {
+            width: 450px;
+            height: 210px;
+            border: 1px solid black;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+
+        .clearfix:after,
+        .clearfix:before {
+            content: "";
+            display: table;
+        }
+
+        .clearfix:after {
+            clear: both;
+        }
+
+        .clearfix {
+            zoom: 1;
+        }
+
+        .subbox7 {
+            float: left;
+            width: 80px;
+            height: 80px;
+            background-color: gold;
+        }
+
+        .subbox8 {}
+
+        .box5 {
+            width: 210px;
+            border: 1px solid black;
+            /* overflow: hidden; */
+        }
+
+        .subbox9 {
+            width: 50px;
+            height: 50px;
+            background-color:gold;
+            float:left;
+            margin: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="box">
+        <div class="subbox subbox1">
+        </div>
+
+        <div class="subbox subbox2">
+        </div>
+    </div>
+
+    <div class="box2">
+        <div class="subbox3">新闻列表</div>
+        <div class="subbox4">更多&gt;</div>
+    </div>
+
+    <div class="box3">
+        <div class="subbox5">首页</div>
+        <div class="subbox5">公司简介</div>
+        <div class="subbox5">解决方案</div>
+        <div class="subbox5">公司新闻</div>
+        <div class="subbox5">行业动态</div>
+        <div class="subbox5">招贤纳才</div>
+        <div class="subbox5 subbox6">联系我们</div>
+    </div>
+
+    <div class="box4 clearfix">
+        <div class="subbox7"></div>
+        <div class="subbox8">
+            聚光科技堆空间堆空间顾地科技概括的九号公馆就会进入和国际化软件规划局如何公积金快进看本来就付款即可福晶科技你开房健康福建高考放假来看奇偶IE体弱四六级分开交罚款金风科技看风景高科技覅U诶欧文我欧诺拉别看手机你都会抗裂砂浆杀戮空间你开房健康福建高考放假来看奇偶IE体弱四六级分开交罚款金风科技看风景高科技覅U诶欧文我欧诺拉别看手机你都会抗裂砂浆杀戮空间你开房健康福建高考放假来看奇偶IE体弱四六级分开交罚款
+        </div>
+    </div>
+
+    <div class="box5">
+        <div class="subbox9">1</div>
+        <div class="subbox9">2</div>
+        <div class="subbox9">3</div>
+        <div class="subbox9">4</div>
+        <div class="subbox9">5</div>
+        <div class="subbox9">6</div>
+        <div class="subbox9">7</div>
+        <div class="subbox9">8</div>
+        <div class="subbox9">9</div>
+        <div style="clear:both;"></div>
+    </div>
+</body>
+
+</html>
