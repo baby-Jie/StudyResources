@@ -25,7 +25,6 @@ int main()
 			temp=m[i][j];
 			m[i][j]=m[j][i];
 			m[j][i]=temp;
-			
 		}
 		
 	} 
