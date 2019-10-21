@@ -1,3 +1,5 @@
+# 求两个数的最大公约数和最小公倍数
+
 L=[int(i) for i in input().split(" ")]
 
 if L[0]>L[1]:
