@@ -1,16 +1,20 @@
+# 85. 最大矩形  使用定点法  执行用时：2092ms 内存消耗：14.7mb
 class Solution:
-    def maximalRectangle(self, matrix) -> int:
+    def maximalRectangle(self, matrix: List[List[str]]) -> int:
         height = len(matrix)
+        if height == 0:
+            return 0
         width = len(matrix[0])
 
         max_len = 0
         for ii in range(height):
             for jj in range(width):
                 ret = self.getMatrixArea(matrix, ii, jj)
-                max_len = max(max_len, ret)
+                if ret > max_len:
+                    max_len = ret
         return max_len
     
-    def getMatrixArea(self, matrix, top:int, left:int):
+    def getMatrixArea(self, matrix: List[List[str]], top:int, left:int):
         height = len(matrix)
         width = len(matrix[0])
         if top >= height or left >= width:
@@ -28,10 +32,3 @@ class Solution:
                     ret = ret = (ii - top + 1) * (jj - left + 1)
                     max_len = max(max_len, ret)
         return max_len           
-
-matrix = [["1","0","1","0","0"],["1","0","1","1","1"],["1","1","1","1","1"],["1","0","0","1","0"]]
-
-s = Solution()
-ret = s.maximalRectangle(matrix)
-
-print(ret)
