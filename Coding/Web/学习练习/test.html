@@ -1,23 +1,42 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <script type="text/javascript">
-    testFun(); // hello function
-    // alert(iNum2); // error
-    alert(iNum);// undefined
-    function testFun(){
-        alert("hello function");
-    }
-    var iNum = 100;
-    
+        function Find(target, array) {
+            // write code here
+            var width = array[0].length;
+            var height = array.length;
+            var top = 0;
+            var right = width - 1;
+
+            while (top <= height - 1 && right >= 0) {
+                // console.log("right:" + right);
+                // console.log("top:" + top);
+                // console.log(array[top][right]);
+                if (array[top][right] == target) {
+                    console.log("true");
+                    return;
+                } else if (target < array[top][right]) {
+                    right -= 1;
+                } else {
+                    top += 1;
+                }
+            }
+            console.log("false");
+        }
+
+        Find(7,[[1,2,8,9],[4,7,10,13]]);
     </script>
     <style type="text/css"></style>
 </head>
+
 <body>
-    
+
 </body>
+
 </html>
