@@ -19,4 +19,15 @@ class Solution:
                 dic1[i] = ret
                 return ret
         return innerRob(length-1)
+
+class Solution:
+    def rob(self, nums: List[int]) -> int:
+        m = len(nums)-1
+        if m==0:
+            return nums[0]
+        elif m==1:
+            return max(nums[1],nums[0])
+        else:
+            return max(self.rob(nums[m-1]),self.rob(nums[m-2])+nums[m])
+
         
