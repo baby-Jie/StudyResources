@@ -1,26 +1,25 @@
+# Definition for singly-linked list.
+
 import heapq
+class ListNode:
+    def __init__(self, x):
+        self.val = x
+        self.next = None
 
-class MaxHeapObjectWrapper(object):
-    def __init__(self, hold):
-        self.hold = hold
-        pass
-    def __gt__(self, other):
-        return other.hold > self.hold 
-
-    def __eq__(self, value):
-        return self.hold == value.hold
-    
-    def __str__(self):
-        return str(self.hold)
-
-li = [1, 5, 3, 9, 4]
-
-li2 = [MaxHeapObjectWrapper(i) for i in li]
-
-heapq.heapify(li)
-heapq.heapify(li2)
-
-print(li, end=" ")
-print()
-for item in li2:
-    print(item, end=" ")
+class Solution:
+    def mergeKLists(self, lists: List[ListNode]) -> ListNode:
+        lis = []
+        for listNode in lists:
+            li = []
+            while listNode:
+                li.append(listNode.val)
+                listNode = listNode.next
+            lis.append(li)
+        ret = heapq.merge(*lis)
+        head = ListNode(-1)
+        current = head
+        for item in ret:
+            node = ListNode(item)
+            current.next = node
+            current = node
+        return head.next
