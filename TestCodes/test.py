@@ -1,25 +1,16 @@
-# Definition for singly-linked list.
+N, M = map(int, input().strip().split(" "))
+li = []
+for _ in range(N):
+    d, p = map(int, input().strip().split(" "))
+    li.append((d, p))
+li.sort(key = lambda x: x[0])
 
-import heapq
-class ListNode:
-    def __init__(self, x):
-        self.val = x
-        self.next = None
-
-class Solution:
-    def mergeKLists(self, lists: List[ListNode]) -> ListNode:
-        lis = []
-        for listNode in lists:
-            li = []
-            while listNode:
-                li.append(listNode.val)
-                listNode = listNode.next
-            lis.append(li)
-        ret = heapq.merge(*lis)
-        head = ListNode(-1)
-        current = head
-        for item in ret:
-            node = ListNode(item)
-            current.next = node
-            current = node
-        return head.next
+persons = [int(i) for i in input().strip().split(" ")]
+for p in persons:
+    ret = 0
+    for tp in li:
+        if p >= tp[0]:
+            ret = tp[1]
+        else:
+            break
+    print(ret)
