@@ -2,6 +2,7 @@
 *.dll
 *.lib
 *.user
+compiler.xml
 
 bin/
 obj/
@@ -9,3 +10,5 @@ Release/
 Debug/
 packages/
 .vs/
+.idea/*
+.idea
