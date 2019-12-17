@@ -1,0 +1,13 @@
+server:
+  port: 9000
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/test?serverTimezone=GMT%2B8
+    username: root
+    password: mysql
+
+mybatis:
+  config-location: classpath:/mybatis/mybatis.cfg.xml
+  mapper-locations: classpath:/mybatis/mapper/**/*.xml
+  type-aliases-package: com.smx.model.domain

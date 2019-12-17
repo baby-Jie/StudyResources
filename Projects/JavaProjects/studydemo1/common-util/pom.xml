@@ -11,9 +11,4 @@
 
     <artifactId>common-util</artifactId>
     <packaging>pom</packaging>
-    <modules>
-        <module>normaltest1</module>
-    </modules>
-
-
 </project>
