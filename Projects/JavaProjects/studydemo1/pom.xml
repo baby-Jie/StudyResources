@@ -13,6 +13,7 @@
         <module>common-util</module>
         <module>normaltest1</module>
         <module>webdemo1</module>
+        <module>jpademo</module>
     </modules>
 
     <dependencies>
