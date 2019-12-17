@@ -11,4 +11,6 @@ Debug/
 packages/
 .vs/
 .idea/*
-.idea
+.idea/
+out/
+target/
