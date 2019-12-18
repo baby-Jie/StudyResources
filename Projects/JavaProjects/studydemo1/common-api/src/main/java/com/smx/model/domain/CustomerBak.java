@@ -12,7 +12,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Entity //声明实体类
 @Table(name="cst_customer") //建立实体类和表的映射关系
-public class Customer implements Serializable {
+public class CustomerBak implements Serializable {
 
     /**
      * @Id：声明主键的配置
