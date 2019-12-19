@@ -9,6 +9,7 @@ import org.junit.Test;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
+import java.util.ArrayList;
 import java.util.List;
 
 public class JpqlTest {
@@ -119,11 +120,9 @@ public class JpqlTest {
     @Test
     public void conditionTest(){
 
-        String jpql = "from CustomerBak where custName like ?";
+        String jpql = "from Customer where custId = ?1";
         Query query = entityManager.createQuery(jpql);
-
-        // query parameters (`?`) are no longer supported
-//        query.setParameter(0, "industry%");
+        query.setParameter(1, 1L);
 
         List list = query.getResultList();
         for (Object o: list){

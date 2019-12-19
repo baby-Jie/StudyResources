@@ -2,15 +2,17 @@ package com.smx.test;
 
 import org.junit.Test;
 
+import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
 
 public class NormalTest {
 
-    public void test(){
-        char s = 'h';
-        System.out.println(Character.SIZE);
-
+    @Test
+    public void test() throws NoSuchFieldException, IllegalAccessException {
+        ArrayList<Integer> arrayList = new ArrayList();
+        System.out.println(arrayList.size());
     }
 
     // region jdk 8 版本中 使用随机数
