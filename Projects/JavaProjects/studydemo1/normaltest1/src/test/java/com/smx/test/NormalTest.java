@@ -1,18 +1,19 @@
 package com.smx.test;
 
+import com.smx.model.domain.User;
 import org.junit.Test;
 
+import java.lang.reflect.Array;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.Random;
+import java.util.*;
 
 public class NormalTest {
 
     @Test
     public void test() throws NoSuchFieldException, IllegalAccessException {
-        ArrayList<Integer> arrayList = new ArrayList();
-        System.out.println(arrayList.size());
+
+        HashMap<String, String> hashMap = new HashMap<>();
+        hashMap.put("1", "2");
     }
 
     // region jdk 8 版本中 使用随机数
