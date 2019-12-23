@@ -19,7 +19,8 @@
                 <Label>远程mysql地址:</Label>
 
                 <TextBox x:Name="RemoteMysqlIpTxtBox"
-                         Width="200">
+                         MinWidth="100"
+                         MaxWidth="200">
                     127.0.0.1
                 </TextBox>
 
@@ -29,22 +30,25 @@
                          MinWidth="40">
                 </TextBox>
 
-                <Label>数据库:</Label>
+                <!--<Label>数据库:</Label>
                 <TextBox x:Name="DbSourceTxtBox"
-                         Width="40"
-                         Text="test"></TextBox>
+                         MinWidth="40"
+                         MaxWidth="100"
+                         Text="test">
+                </TextBox>-->
 
                 <Label>用户名:</Label>
                 <TextBox x:Name="DbUserTxtBox"
-                         Width="40"
+                         MinWidth="40"
+                         MaxWidth="100"
                          Text="root">
                 </TextBox>
 
                 <Label>密码:</Label>
                 <TextBox x:Name="DbPasswordTxtBox"
-                         Width="40"
+                         MinWidth="40"
+                         MaxWidth="100"
                          Text="mysql">
-                    
                 </TextBox>
 
                 <Button x:Name="OpenBtn"
@@ -60,10 +64,27 @@
         </Grid>
 
         <Grid Grid.Row="1">
-            <ListBox x:Name="TableListBox"
-                     SelectionChanged="TableListBox_OnSelectionChanged">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
 
-            </ListBox>
+            <Grid>
+                <Label HorizontalAlignment="Center"
+                       VerticalAlignment="Top">Database</Label>
+                <ListBox x:Name="DatabaseListBox" Margin="0 20 0 0"
+                         SelectionChanged="DatabaseListBox_OnSelectionChanged">
+
+                </ListBox>
+            </Grid>
+
+            <Grid  Grid.Column="1">
+                <Label HorizontalAlignment="Center" 
+                       VerticalAlignment="Top">Table</Label>
+                <ListBox x:Name="TableListBox" Margin="0 20 0 0"
+                         SelectionChanged="TableListBox_OnSelectionChanged">
+                </ListBox>
+            </Grid>
         </Grid>
 
         <Grid Grid.Row="2">

@@ -18,16 +18,17 @@ namespace MysqlCodeGenerator
     /// </summary>
     public partial class MainWindow : Window
     {
+        private List<string> _databaseList = new List<string>(); // 数据库 列表
 
-        private List<string> tableList = new List<string>();
+        private List<string> _tableList = new List<string>(); // 数据表 列表
 
-        private MySqlConnection mySqlConnection = null;
+        private MySqlConnection _mySqlConnection = null;
 
-        private string databaseNameStr = "test";
+        private string _databaseNameStr = "";
 
-        private string databaseUserName = "root";
+        private string _databaseUserName = "root";
 
-        private string databasePassword = "mysql";
+        private string _databasePassword = "mysql";
 
 
         public MainWindow()
@@ -72,10 +73,9 @@ namespace MysqlCodeGenerator
         {
             // Data Source=127.0.0.1;User Id=root;Password=mysql;pooling=false;CharSet=utf8;port=3306"
             string mysqlServerIp = RemoteMysqlIpTxtBox.Text.Trim();
-            databaseNameStr = DbSourceTxtBox.Text.Trim();
-            databaseUserName = DbUserTxtBox.Text.Trim();
-            databasePassword = DbPasswordTxtBox.Text.Trim();
-            if (!CheckBeforeOpen(mysqlServerIp, databaseNameStr)) return;
+            _databaseUserName = DbUserTxtBox.Text.Trim();
+            _databasePassword = DbPasswordTxtBox.Text.Trim();
+            if (!CheckBeforeOpen(mysqlServerIp)) return;
             string portStr = PortTxtBox.Text.Trim();
             if (string.IsNullOrWhiteSpace(portStr))
             {
@@ -99,12 +99,12 @@ namespace MysqlCodeGenerator
             }
 
             string dbSourceStr =
-                $"Database=test;Data Source={mysqlServerIp};User Id={databaseUserName};Password={databasePassword};pooling=false;CharSet=utf8;port={portStr}";
+                $"Database={_databaseNameStr};Data Source={mysqlServerIp};User Id={_databaseUserName};Password={_databasePassword};pooling=false;CharSet=utf8;port={portStr}";
 
-            List<string> tableNames = new List<string>();
-            mySqlConnection = MysqlUtil.GetMySqlConnection(dbSourceStr);
-            var sqlCmd = MysqlUtil.GetSqlCommand("show tables;", mySqlConnection);
-            mySqlConnection.Open();
+            List<string> databaseNames = new List<string>();
+            _mySqlConnection = MysqlUtil.GetMySqlConnection(dbSourceStr);
+            var sqlCmd = MysqlUtil.GetSqlCommand("show databases;", _mySqlConnection);
+            _mySqlConnection.Open();
 
             try
             {
@@ -116,7 +116,7 @@ namespace MysqlCodeGenerator
                         if (mySqlDataReader.HasRows)
                         {
                             string tableName = mySqlDataReader.GetString(0);
-                            tableNames.Add(tableName);
+                            databaseNames.Add(tableName);
                         }
                     }
                 }
@@ -127,20 +127,21 @@ namespace MysqlCodeGenerator
                 return;
             }
 
-            tableList = tableNames;
-            TableListBox.ItemsSource = tableList;
+            _tableList = databaseNames;
+            DatabaseListBox.ItemsSource = _tableList; // 显示数据库列表
         }
 
         /// <summary>
         /// 打开数据库之前例行检查
         /// </summary>
         /// <returns></returns>
-        private bool CheckBeforeOpen(string mysqlServerIp, string databaseName)
+        private bool CheckBeforeOpen(string mysqlServerIp)
         {
             if (string.IsNullOrEmpty(mysqlServerIp)) return false; // 也可以检查是否符合ip的书写规则(排除localhost)，提高程序的健壮性
-            if (string.IsNullOrEmpty(databaseName)) return false;
 
-            if (string.IsNullOrWhiteSpace(databaseUserName) || string.IsNullOrWhiteSpace(databasePassword))
+            //if (string.IsNullOrEmpty(_databaseNameStr)) return false;
+
+            if (string.IsNullOrWhiteSpace(_databaseUserName) || string.IsNullOrWhiteSpace(_databasePassword))
             {
                 return false;
             }
@@ -170,8 +171,8 @@ namespace MysqlCodeGenerator
             }
 
             string selectColumnNameSql =
-                $"SELECT column_name FROM information_schema.columns WHERE table_schema='{databaseNameStr}' AND table_name='{selectedTableName}';";
-            var sqlCmd = MysqlUtil.GetSqlCommand(selectColumnNameSql, mySqlConnection);
+                $"SELECT column_name FROM information_schema.columns WHERE table_schema='{_databaseNameStr}' AND table_name='{selectedTableName}';";
+            var sqlCmd = MysqlUtil.GetSqlCommand(selectColumnNameSql, _mySqlConnection);
 
             List<ColumnModel> columnModels = new List<ColumnModel>();
 
@@ -220,13 +221,13 @@ namespace MysqlCodeGenerator
         private void CloseMysqlConnection()
         {
             TableListBox.ItemsSource = null;
-            if (mySqlConnection != null)
+            if (_mySqlConnection != null)
             {
                 try
                 {
-                    mySqlConnection.Close();
+                    _mySqlConnection.Close();
 
-                    mySqlConnection = null;
+                    _mySqlConnection = null;
                 }
                 catch (Exception e)
                 {
@@ -257,6 +258,59 @@ namespace MysqlCodeGenerator
             sb.AppendLine(lastText);
 
             return sb.ToString();
+        }
+
+        /// <summary>
+        /// 获取选中数据库的数据表列表
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DatabaseListBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            _tableList = null;
+
+            if (DatabaseListBox.SelectedItem == null)
+            {
+                return;
+            }
+
+            string selectedDatabase = DatabaseListBox.SelectedItem.ToString();
+
+            if (string.IsNullOrWhiteSpace(selectedDatabase))
+            {
+                return;
+            }
+
+            _databaseNameStr = selectedDatabase;
+
+
+            try
+            {
+                var useDatabaseCmd = MysqlUtil.GetSqlCommand($"use {_databaseNameStr};", _mySqlConnection);
+
+                useDatabaseCmd.ExecuteNonQuery();
+
+                var sqlCmd = MysqlUtil.GetSqlCommand("show tables;", _mySqlConnection);
+
+                _tableList = new List<string>();
+                using (MySqlDataReader mySqlDataReader = sqlCmd.ExecuteReader())
+                {
+                    while (mySqlDataReader.Read())
+                    {
+                        if (mySqlDataReader.HasRows)
+                        {
+                            string tableName = mySqlDataReader.GetString(0);
+                            _tableList.Add(tableName);
+                        }
+                    }
+                }
+
+                TableListBox.ItemsSource = _tableList;
+            }
+            catch (Exception exception)
+            {
+                MessageBox.Show("获取数据表信息失败," + exception.Message);
+            }
         }
     }
 }
