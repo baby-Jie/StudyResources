@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using MySql.Data.MySqlClient;
@@ -9,6 +10,34 @@ namespace MysqlCodeGenerator.Utils
 {
     public class MysqlUtil
     {
+        private static Dictionary<string, string> _databaseTypeDictionary = new Dictionary<string, string>();
+
+        public static Dictionary<string, string> DatabaseTypeDictionary
+        {
+            get { return _databaseTypeDictionary; }
+        }
+
+        public static string GetMappedType(string type)
+        {
+            string retType = string.Empty;
+            if (_databaseTypeDictionary.ContainsKey(type))
+            {
+                retType = _databaseTypeDictionary[type];
+            }
+
+            return retType;
+        }
+
+        static MysqlUtil()
+        {
+            _databaseTypeDictionary["varchar"] = "String";
+            _databaseTypeDictionary["char"] = "char";
+            _databaseTypeDictionary["int"] = "Long";
+            _databaseTypeDictionary["bigint"] = "Long";
+            _databaseTypeDictionary["datetime"] = "DateTime";
+            _databaseTypeDictionary["double"] = "Double";
+        }
+
         public static MySqlConnection GetMySqlConnection(string connectStr)
         {
             return new MySqlConnection(connectStr);

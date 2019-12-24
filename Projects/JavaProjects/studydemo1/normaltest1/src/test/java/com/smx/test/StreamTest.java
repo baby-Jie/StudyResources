@@ -1,6 +1,7 @@
 package com.smx.test;
 
 import com.smx.model.domain.User;
+import com.smx.util.LogUtil;
 import com.smx.util.StreamUtil;
 import org.junit.After;
 import org.junit.Before;
@@ -67,7 +68,12 @@ public class StreamTest {
     public void collectTest(){
 
         // Collectors.toList
-        userList.stream().map(User::getUserName).collect(Collectors.toList());
+        List<String> names = userList.stream().map(User::getUserName).collect(Collectors.toList());
+
+        // Collectors.joining
+        String str = names.stream().collect(Collectors.joining(":"));
+
+        LogUtil.RedInfo(str);
 
         // Collectors.toSet
         userList.stream().map(User::getUserName).collect(Collectors.toSet()); // 如果有重复的就会抛出异常
@@ -88,4 +94,14 @@ public class StreamTest {
         }
     }
     // endregion collect method in Stream
+
+    // region distinct method in Stream
+    @Test
+    public void distinctTest(){
+        List<String> sexes = userList.stream().map(User::getSex).distinct().collect(Collectors.toList());
+        for (String sex: sexes){
+            LogUtil.RedInfo(sex);
+        }
+    }
+    // endregion distinct method in Stream
 }

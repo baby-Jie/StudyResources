@@ -81,6 +81,10 @@ namespace MysqlCodeGenerator
                 return;
             }
 
+            DatabaseListBox.ItemsSource = null;
+            TableListBox.ItemsSource = null;
+            MessageTxtBox.Text = null;
+
             try
             {
                 string connectIp = connectionModel.RemoteIp;
@@ -89,7 +93,7 @@ namespace MysqlCodeGenerator
                 string userPass = connectionModel.UserPass;
 
                 string dbSourceStr =
-                    $"Database={_databaseNameStr};Data Source={connectIp};User Id={userName};Password={userPass};pooling=false;CharSet=utf8;port={connectPort}";
+                    $"Data Source={connectIp};User Id={userName};Password={userPass};pooling=false;CharSet=utf8;port={connectPort}";
 
                 List<string> databaseNames = new List<string>();
 
@@ -201,6 +205,11 @@ namespace MysqlCodeGenerator
 
         private void TableListBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            SelectedTableChanged();
+        }
+
+        private void SelectedTableChanged()
+        {
             if (TableListBox.SelectedItem == null)
             {
                 return;
@@ -213,8 +222,13 @@ namespace MysqlCodeGenerator
                 return;
             }
 
+            ChooseTable(selectedTableName);
+        }
+
+        private void ChooseTable(string selectedTableName)
+        {
             string selectColumnNameSql =
-                $"SELECT column_name FROM information_schema.columns WHERE table_schema='{_databaseNameStr}' AND table_name='{selectedTableName}';";
+                $"SELECT column_name, data_type, column_key FROM information_schema.columns WHERE table_schema='{_databaseNameStr}' AND table_name='{selectedTableName}';";
             var sqlCmd = MysqlUtil.GetSqlCommand(selectColumnNameSql, _mySqlConnection);
 
             List<ColumnModel> columnModels = new List<ColumnModel>();
@@ -228,8 +242,17 @@ namespace MysqlCodeGenerator
                         if (dataReader.HasRows)
                         {
                             string originalName = dataReader.GetString(0);
+                            originalName = originalName.ToLower();
+                            string dataTypeStr = dataReader.GetString(1);
+                            string columnKey = dataReader.GetString(2);
+
                             string newColumnName = MysqlUtil.GetModelColumnName(originalName);
-                            ColumnModel columnModel = new ColumnModel(originalName, newColumnName);
+                            ColumnModel columnModel = new ColumnModel(originalName, newColumnName, dataTypeStr);
+
+                            if (!string.IsNullOrWhiteSpace(columnKey) || "PRI".Equals(columnKey.ToUpper()))
+                            {
+                                columnModel.IsPrimaryKey = true;
+                            }
                             columnModels.Add(columnModel);
                         }
                     }
@@ -240,12 +263,36 @@ namespace MysqlCodeGenerator
                 MessageBox.Show("获取表信息失败，错误原因:" + exception.Message);
             }
 
-            if (columnModels.Count > 0)
-            {
-                string text = GetSelectReturnString(columnModels);
+            TableModel tableModel = new TableModel(selectedTableName, columnModels);
 
-                MessageTxtBox.Text = text;
+            SetMessageTxtBox(tableModel);
+        }
+
+
+        private void SetMessageTxtBox(TableModel tableModel)
+        {
+            List<ColumnModel> columnModels = tableModel.ColumnModels;
+            if (columnModels == null || columnModels.Count == 0)
+            {
+                MessageTxtBox.Text = null;
+                return;
             }
+
+            string text = string.Empty;
+            if (FieldRadioBtn.IsChecked == true)
+            {
+                text = GetSelectReturnString(tableModel);
+            }
+            else if (ClassRadioBtn.IsChecked == true)
+            {
+                text = GetClassReturnString(tableModel);
+            }
+            else if (BeanRadioBtn.IsChecked == true)
+            {
+                text = GetBeanClassReturnString(tableModel);
+            }
+
+            MessageTxtBox.Text = text;
         }
 
         private void MainWindow_OnUnloaded(object sender, RoutedEventArgs e)
@@ -284,8 +331,9 @@ namespace MysqlCodeGenerator
         /// </summary>
         /// <param name="columnModels"></param>
         /// <returns></returns>
-        private string GetSelectReturnString(List<ColumnModel> columnModels)
+        private string GetSelectReturnString(TableModel tableModel)
         {
+            List<ColumnModel> columnModels = tableModel.ColumnModels;
             StringBuilder sb = new StringBuilder();
             int count = columnModels.Count;
 
@@ -304,8 +352,99 @@ namespace MysqlCodeGenerator
             }
 
             var lastColumnModel = columnModels[count - 1];
-            string lastText = $"\t{lastColumnModel.OriginalColumnName} as {lastColumnModel.NewColumnName}";
+            string lastText = $"\t{lastColumnModel.OriginalColumnName}";
+
+            if (!lastColumnModel.OriginalColumnName.Equals(lastColumnModel.NewColumnName))
+            {
+                lastText = $"\t{lastColumnModel.OriginalColumnName} as {lastColumnModel.NewColumnName}";
+            }
+
             sb.AppendLine(lastText);
+
+            sb.AppendLine($"from {tableModel.TableName}");
+
+            return sb.ToString();
+        }
+
+        private string GetClassReturnString(TableModel tableModel)
+        {
+            List<ColumnModel> columnModels = tableModel.ColumnModels;
+            StringBuilder sb = new StringBuilder();
+
+            string tableName = MysqlUtil.GetModelColumnName(tableModel.TableName);
+            char firstChar = tableName[0];
+            if (firstChar >= 'a' && firstChar <= 'z')
+            {
+                firstChar = (char) (firstChar - 32);
+                tableName = firstChar + tableName.Substring(1);
+            }
+
+            sb.AppendLine("@Data");
+            sb.AppendLine("@AllArgsConstructor");
+            sb.AppendLine("@NoArgsConstructor");
+
+
+            sb.Append($"public class {tableName}");
+            sb.AppendLine("{");
+            foreach (var columnModel in columnModels)
+            {
+                if (string.IsNullOrWhiteSpace(columnModel.DataType))
+                {
+                    continue;
+                }
+
+                string dataType = MysqlUtil.GetMappedType(columnModel.DataType);
+                string fieldLine = $"\tprivate {dataType} {columnModel.NewColumnName};";
+                sb.AppendLine(fieldLine);
+                sb.AppendLine();
+            }
+
+            sb.AppendLine("}");
+
+            return sb.ToString();
+        }
+
+        private string GetBeanClassReturnString(TableModel tableModel)
+        {
+            List<ColumnModel> columnModels = tableModel.ColumnModels;
+            StringBuilder sb = new StringBuilder();
+
+            string tableName = MysqlUtil.GetModelColumnName(tableModel.TableName);
+            char firstChar = tableName[0];
+            if (firstChar >= 'a' && firstChar <= 'z')
+            {
+                firstChar = (char)(firstChar - 32);
+                tableName = firstChar + tableName.Substring(1);
+            }
+
+            sb.AppendLine("@Data");
+            sb.AppendLine("@AllArgsConstructor");
+            sb.AppendLine("@NoArgsConstructor");
+            sb.AppendLine($"@Table(name = \"{tableModel.TableName}\")");
+
+
+            sb.Append($"public class {tableName}");
+            sb.AppendLine("{");
+            foreach (var columnModel in columnModels)
+            {
+                if (string.IsNullOrWhiteSpace(columnModel.DataType))
+                {
+                    continue;
+                }
+
+                string dataType = MysqlUtil.GetMappedType(columnModel.DataType);
+                string attributeLine = $"\t@Column(name = \"{columnModel.OriginalColumnName}\")";
+                string fieldLine = $"\tprivate {dataType} {columnModel.NewColumnName};";
+                if (columnModel.IsPrimaryKey)
+                {
+                    sb.AppendLine("\t@Id");
+                }
+                sb.AppendLine(attributeLine);
+                sb.AppendLine(fieldLine);
+                sb.AppendLine();
+            }
+
+            sb.AppendLine("}");
 
             return sb.ToString();
         }
@@ -385,6 +524,12 @@ namespace MysqlCodeGenerator
             string connectionStr = ConnectListBox.SelectedItem.ToString();
 
             OpenDbSource(connectionStr, false);
+        }
+
+        private void EventSetter_OnHandler(object sender, RoutedEventArgs e)
+        {
+            MessageTxtBox.Text = null;
+            SelectedTableChanged();
         }
     }
 }

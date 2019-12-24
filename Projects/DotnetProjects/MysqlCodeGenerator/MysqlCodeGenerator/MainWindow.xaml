@@ -7,7 +7,9 @@
         mc:Ignorable="d"
         Loaded="MainWindow_OnLoaded"
         Unloaded="MainWindow_OnUnloaded"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow"
+        Height="450"
+        Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="60"></RowDefinition>
@@ -15,7 +17,9 @@
         </Grid.RowDefinitions>
 
         <Grid Margin="0 20 0 0">
-            <StackPanel Orientation="Horizontal">
+            <StackPanel Orientation="Horizontal"
+                        VerticalAlignment="Center"
+                        TextBlock.FontSize="16">
                 <Label>远程mysql地址:</Label>
 
                 <TextBox x:Name="RemoteMysqlIpTxtBox"
@@ -66,7 +70,8 @@
         <Grid Grid.Row="1">
 
             <Grid.ColumnDefinitions>
-                <ColumnDefinition MinWidth="100" MaxWidth="150"></ColumnDefinition>
+                <ColumnDefinition MinWidth="100"
+                                  MaxWidth="150"></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
 
@@ -90,23 +95,64 @@
                     <Grid>
                         <Label HorizontalAlignment="Center"
                                VerticalAlignment="Top">Database</Label>
-                        <ListBox x:Name="DatabaseListBox" Margin="0 20 0 0"
+                        <ListBox x:Name="DatabaseListBox"
+                                 Margin="0 20 0 0"
                                  SelectionChanged="DatabaseListBox_OnSelectionChanged">
 
                         </ListBox>
                     </Grid>
 
                     <Grid  Grid.Column="1">
-                        <Label HorizontalAlignment="Center" 
+                        <Label HorizontalAlignment="Center"
                                VerticalAlignment="Top">Table</Label>
-                        <ListBox x:Name="TableListBox" Margin="0 20 0 0"
+                        <ListBox x:Name="TableListBox"
+                                 Margin="0 20 0 0"
                                  SelectionChanged="TableListBox_OnSelectionChanged">
                         </ListBox>
                     </Grid>
                 </Grid>
 
                 <Grid Grid.Row="1">
-                    <TextBox x:Name="MessageTxtBox"></TextBox>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="40"></RowDefinition>
+                        <RowDefinition></RowDefinition>
+                    </Grid.RowDefinitions>
+
+                    <StackPanel Orientation="Horizontal">
+
+                        <StackPanel.Resources>
+                            <Style TargetType="RadioButton">
+                                <Setter Property="Margin"
+                                        Value="20 0">
+                                </Setter>
+
+                                <Setter Property="VerticalAlignment"
+                                        Value="Center">
+                                </Setter>
+
+                                <EventSetter Event="Checked" Handler="EventSetter_OnHandler"></EventSetter>
+                            </Style>
+                        </StackPanel.Resources>
+
+                        <RadioButton x:Name="FieldRadioBtn"
+                                     Content="Field"
+                                     IsChecked="True">
+
+                        </RadioButton>
+
+                        <RadioButton x:Name="ClassRadioBtn"
+                                     Content="Class">
+                        </RadioButton>
+
+                        <RadioButton x:Name="BeanRadioBtn"
+                                     Content="Bean">
+                        </RadioButton>
+
+                    </StackPanel>
+
+                    <TextBox x:Name="MessageTxtBox"
+                             Grid.Row="1">
+                    </TextBox>
                 </Grid>
             </Grid>
         </Grid>

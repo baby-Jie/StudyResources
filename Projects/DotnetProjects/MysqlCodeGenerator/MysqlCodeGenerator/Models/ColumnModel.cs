@@ -19,14 +19,24 @@ namespace MysqlCodeGenerator.Models
         public string NewColumnName { get; set; }
 
         /// <summary>
+        /// 是否是主键
+        /// </summary>
+        public bool IsPrimaryKey { get; set; }
+
+        /// <summary>
         /// 字段类型
         /// </summary>
-        public string ColumnType { get; set; }
+        public string DataType { get; set; }
 
-        public ColumnModel(string originalColumnName, string newColumnName)
+        public ColumnModel(string originalColumnName, string newColumnName): this(originalColumnName, newColumnName, string.Empty)
+        {
+        }
+
+        public ColumnModel(string originalColumnName, string newColumnName, string dataType)
         {
             this.OriginalColumnName = originalColumnName;
             this.NewColumnName = newColumnName;
+            this.DataType = dataType;
         }
 
 
