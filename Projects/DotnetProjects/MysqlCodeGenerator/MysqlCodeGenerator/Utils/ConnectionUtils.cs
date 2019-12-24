@@ -14,7 +14,17 @@ namespace MysqlCodeGenerator.Utils
 
         private static List<string> _connectionStrList;
 
+        public static List<string> ConnectionStrList
+        {
+            get { return _connectionStrList; }
+        }
+
         private static List<ConnectionModel> _connectionModelList;
+
+        public static List<ConnectionModel> ConnectionModelList
+        {
+            get { return _connectionModelList; }
+        }
 
         static ConnectionUtils()
         {
@@ -58,12 +68,15 @@ namespace MysqlCodeGenerator.Utils
         {
             List<ConnectionModel> connectionModels = new List<ConnectionModel>();
 
-            foreach (var connectionStr in connectionStrList)
+            if (connectionStrList != null)
             {
-                ConnectionModel connectionModel = GetConnectionModel(connectionStr);
-                if (connectionModel != null)
+                foreach (var connectionStr in connectionStrList)
                 {
-                    connectionModels.Add(connectionModel);
+                    ConnectionModel connectionModel = GetConnectionModel(connectionStr);
+                    if (connectionModel != null)
+                    {
+                        connectionModels.Add(connectionModel);
+                    }
                 }
             }
 
@@ -102,16 +115,22 @@ namespace MysqlCodeGenerator.Utils
         /// <param name="connectionStr"></param>
         public static void AddConnection(string connectionStr)
         {
-            if (_connectionStrList.Any(s => s.Equals(connectionStr)))
+            if (_connectionStrList == null)
             {
-                return;
+                _connectionStrList = new List<string>();
+
+            }
+            if ( _connectionStrList.Any(s => s.Equals(connectionStr)))
+            {
             }
             else
             {
                 _connectionStrList.Add(connectionStr);
                 ConnectionModel model = GetConnectionModel(connectionStr);
                 _connectionModelList.Add(model);
+
             }
+            SaveConnection();
         }
 
         /// <summary>

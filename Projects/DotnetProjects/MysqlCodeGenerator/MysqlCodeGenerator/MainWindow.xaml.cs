@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Data.Common;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Resources;
 using MysqlCodeGenerator.Models;
 using MysqlCodeGenerator.Utils;
 using MySql.Data.MySqlClient;
@@ -40,7 +42,7 @@ namespace MysqlCodeGenerator
         /// 查询并获得结果集并遍历
         /// </summary>
         /// <param name="mySqlCommand"></param>
-        public static void GetResultset(MySqlCommand mySqlCommand)
+        public static void GetResultSet(MySqlCommand mySqlCommand)
         {
             MySqlDataReader reader = mySqlCommand.ExecuteReader();
             try
@@ -69,9 +71,77 @@ namespace MysqlCodeGenerator
             OpenDbSource();
         }
 
+        private void OpenDbSource(string connectionStr, bool addToList = true)
+        {
+            ConnectionModel connectionModel = ConnectionUtils.GetConnectionModel(connectionStr);
+
+            if (null == connectionModel)
+            {
+                MessageBox.Show("打开数据库失败,连接为:" + connectionStr);
+                return;
+            }
+
+            try
+            {
+                string connectIp = connectionModel.RemoteIp;
+                int connectPort = connectionModel.Port;
+                string userName = connectionModel.UserName;
+                string userPass = connectionModel.UserPass;
+
+                string dbSourceStr =
+                    $"Database={_databaseNameStr};Data Source={connectIp};User Id={userName};Password={userPass};pooling=false;CharSet=utf8;port={connectPort}";
+
+                List<string> databaseNames = new List<string>();
+
+                // 打开之前先关闭已经打开的连接
+                CloseMysqlConnection();
+
+
+                _mySqlConnection = MysqlUtil.GetMySqlConnection(dbSourceStr);
+                var sqlCmd = MysqlUtil.GetSqlCommand("show databases;", _mySqlConnection);
+                _mySqlConnection.Open();
+
+                try
+                {
+                    using (MySqlDataReader mySqlDataReader = sqlCmd.ExecuteReader())
+                    {
+                        while (mySqlDataReader.Read())
+                        {
+                            if (mySqlDataReader.HasRows)
+                            {
+                                string tableName = mySqlDataReader.GetString(0);
+                                databaseNames.Add(tableName);
+                            }
+                        }
+                    }
+                }
+                catch (Exception e)
+                {
+                    MessageBox.Show("打开数据库失败," + e.Message);
+                    return;
+                }
+
+
+                _tableList = databaseNames;
+                DatabaseListBox.ItemsSource = _tableList; // 显示数据库列表
+            }
+            catch (Exception e)
+            {
+                MessageBox.Show("连接数据库失败，错误信息:" + e.Message);
+                return;
+            }
+
+            // 添加进列表（使用打开功能的话就加，listbox的selectionChanged就不加）
+            if (addToList)
+            {
+                ConnectionUtils.AddConnection(connectionStr);
+
+                LoadConnectionList();
+            }
+        }
+
         private void OpenDbSource()
         {
-            // Data Source=127.0.0.1;User Id=root;Password=mysql;pooling=false;CharSet=utf8;port=3306"
             string mysqlServerIp = RemoteMysqlIpTxtBox.Text.Trim();
             _databaseUserName = DbUserTxtBox.Text.Trim();
             _databasePassword = DbPasswordTxtBox.Text.Trim();
@@ -98,37 +168,10 @@ namespace MysqlCodeGenerator
                 }
             }
 
-            string dbSourceStr =
-                $"Database={_databaseNameStr};Data Source={mysqlServerIp};User Id={_databaseUserName};Password={_databasePassword};pooling=false;CharSet=utf8;port={portStr}";
+            string connectionStr = $"{mysqlServerIp}>{portStr}>{_databaseUserName}>{_databasePassword}";
 
-            List<string> databaseNames = new List<string>();
-            _mySqlConnection = MysqlUtil.GetMySqlConnection(dbSourceStr);
-            var sqlCmd = MysqlUtil.GetSqlCommand("show databases;", _mySqlConnection);
-            _mySqlConnection.Open();
+            OpenDbSource(connectionStr, true);
 
-            try
-            {
-
-                using (MySqlDataReader mySqlDataReader = sqlCmd.ExecuteReader())
-                {
-                    while (mySqlDataReader.Read())
-                    {
-                        if (mySqlDataReader.HasRows)
-                        {
-                            string tableName = mySqlDataReader.GetString(0);
-                            databaseNames.Add(tableName);
-                        }
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                MessageBox.Show("打开数据库失败," + e.Message);
-                return;
-            }
-
-            _tableList = databaseNames;
-            DatabaseListBox.ItemsSource = _tableList; // 显示数据库列表
         }
 
         /// <summary>
@@ -246,15 +289,22 @@ namespace MysqlCodeGenerator
             StringBuilder sb = new StringBuilder();
             int count = columnModels.Count;
 
+            sb.AppendLine("select");
             for (int i = 0; i < count - 1; i++)
             {
                 var columnModel = columnModels[i];
-                string text = $"{columnModel.OriginalColumnName} as {columnModel.NewColumnName},";
+                string text = "\t" + columnModel.OriginalColumnName + ",";
+
+                if (!columnModel.OriginalColumnName.Equals(columnModel.NewColumnName))
+                {
+                    text = $"\t{columnModel.OriginalColumnName} as {columnModel.NewColumnName},";
+                }
+
                 sb.AppendLine(text);
             }
 
             var lastColumnModel = columnModels[count - 1];
-            string lastText = $"{lastColumnModel.OriginalColumnName} as {lastColumnModel.NewColumnName}";
+            string lastText = $"\t{lastColumnModel.OriginalColumnName} as {lastColumnModel.NewColumnName}";
             sb.AppendLine(lastText);
 
             return sb.ToString();
@@ -311,6 +361,30 @@ namespace MysqlCodeGenerator
             {
                 MessageBox.Show("获取数据表信息失败," + exception.Message);
             }
+        }
+
+        private void LoadConnectionList()
+        {
+            ConnectListBox.ItemsSource = null;
+            var connectionStrList = ConnectionUtils.ConnectionStrList;
+
+            ConnectListBox.ItemsSource = connectionStrList;
+        }
+
+        private void MainWindow_OnLoaded(object sender, RoutedEventArgs e)
+        {
+            LoadConnectionList();
+        }
+
+        private void ConnectListBox_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (ConnectListBox.SelectedItem == null)
+            {
+                return;
+            }
+            string connectionStr = ConnectListBox.SelectedItem.ToString();
+
+            OpenDbSource(connectionStr, false);
         }
     }
 }

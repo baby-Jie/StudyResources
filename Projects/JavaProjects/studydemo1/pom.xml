@@ -14,6 +14,7 @@
         <module>normaltest1</module>
         <module>webdemo1</module>
         <module>jpademo</module>
+        <module>AlgorithmDemo</module>
     </modules>
 
     <dependencies>
