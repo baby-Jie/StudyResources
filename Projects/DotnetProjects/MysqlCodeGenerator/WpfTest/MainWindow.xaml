@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfTest"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="250" Width="300">
     <Grid>
         <TextBox x:Name="PathTxtBox"
                  HorizontalAlignment="Center"
@@ -17,6 +17,14 @@
         <Button x:Name="TestBtn" HorizontalAlignment="Center"
                 VerticalAlignment="Center"
                 Content="Test"
-                Click="TestBtn_OnClick"></Button>
+                Click="TestBtn_OnClick">
+        </Button>
+
+        <Button x:Name="SetClickThroughBtn"
+                Content="SetClickThrough"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Bottom"
+                Click="SetClickThroughBtn_Click">
+        </Button>
     </Grid>
 </Window>
