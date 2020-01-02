@@ -1,0 +1,45 @@
+{
+
+
+
+    "editor.suggestSelection": "first",
+    "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
+    "java.home": "E:\\Program Files\\Java\\jdk1.8.0_201",
+    "explorer.confirmDelete": false,
+    "files.exclude": {
+        "**/.classpath": true,
+        "**/.project": true,
+        "**/.settings": true,
+        "**/.factorypath": true
+    },
+    "window.zoomLevel": 0,
+    "python.jediEnabled": false,
+    "editor.wordWrap": "on",
+    "editor.fontFamily": "Lucida Console",
+    "editor.fontWeight": "600",
+    "workbench.iconTheme": "vscode-icons",
+    "workbench.colorTheme": "Visual Studio Dark",
+    "picgo.picBed.current": "github",
+    "picgo.picBed.github.branch": "master",
+    "picgo.picBed.github.repo": "baby-jie/MarkdownImages",
+    "picgo.picBed.github.path": "Coding/MarkdownImages/",
+    "picgo.picBed.github.token": "82c1d4c5a074c6bb2abf87016c47821a04f8c13d",
+    "git.autofetch": true,
+    "git.enableSmartCommit": true,
+    "git.confirmSync": false,
+
+    "vim.insertModeKeyBindings": [
+    {
+      "before": ["j", "j"],
+      "after": ["<Esc>"]
+    }
+  ],
+  "syncing.extensions.autoUpdate": true,
+  "editor.minimap.enabled": false,
+  "files.autoSave": "afterDelay",
+  "sync.gist": "98691a078cc81a5d99c45e81c769abf8",
+  "sync.autoDownload": false,
+  "sync.autoUpload": false,
+  "sync.quietSync": false,
+  "breadcrumbs.enabled": false,
+}
