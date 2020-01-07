@@ -34,7 +34,7 @@ namespace NativeLibrary.NativeMethods
         /// <param name="dwNewLong"></param>
         /// <returns></returns>
         [DllImport("user32.dll", EntryPoint = "SetWindowLong", SetLastError = true)]
-        private static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
+        public static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
 
         /// <summary>
         /// 获取window的样式
@@ -43,6 +43,19 @@ namespace NativeLibrary.NativeMethods
         /// <param name="nIndex"></param>
         /// <returns></returns>
         [DllImport("user32", EntryPoint = "GetWindowLong")]
-        public static extern uint GetWindowLong(IntPtr hwnd, int nIndex);
+        public static extern int GetWindowLong(IntPtr hwnd, int nIndex);
+
+        /// <summary>
+        /// 设置窗口透明
+        /// </summary>
+        /// <param name="hwnd"></param>
+        /// <param name="crKey"></param>
+        /// <param name="bAlpha"></param>
+        /// <param name="dwFlags"></param>
+        /// <returns></returns>
+        [DllImport("user32", EntryPoint = "SetLayeredWindowAttributes")]
+        public static extern int SetLayeredWindowAttributes(IntPtr hwnd, int crKey, int bAlpha, int dwFlags);
+
+
     }
 }
