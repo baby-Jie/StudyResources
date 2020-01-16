@@ -7,8 +7,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "WindowsProjectDemo1", "Wind
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ConsoleDemo1", "ConsoleDemo1\ConsoleDemo1.vcxproj", "{472095DF-BC5C-4770-8780-E76210299BCE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpfApp1", "WpfApp1\WpfApp1.csproj", "{0C439B27-DB27-40C8-B40A-648917338CA9}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,18 +37,6 @@ Global
 		{472095DF-BC5C-4770-8780-E76210299BCE}.Release|x64.Build.0 = Release|x64
 		{472095DF-BC5C-4770-8780-E76210299BCE}.Release|x86.ActiveCfg = Release|Win32
 		{472095DF-BC5C-4770-8780-E76210299BCE}.Release|x86.Build.0 = Release|Win32
-		{0C439B27-DB27-40C8-B40A-648917338CA9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0C439B27-DB27-40C8-B40A-648917338CA9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0C439B27-DB27-40C8-B40A-648917338CA9}.Debug|x64.ActiveCfg = Debug|Any CPU
-		{0C439B27-DB27-40C8-B40A-648917338CA9}.Debug|x64.Build.0 = Debug|Any CPU
-		{0C439B27-DB27-40C8-B40A-648917338CA9}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{0C439B27-DB27-40C8-B40A-648917338CA9}.Debug|x86.Build.0 = Debug|Any CPU
-		{0C439B27-DB27-40C8-B40A-648917338CA9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0C439B27-DB27-40C8-B40A-648917338CA9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0C439B27-DB27-40C8-B40A-648917338CA9}.Release|x64.ActiveCfg = Release|Any CPU
-		{0C439B27-DB27-40C8-B40A-648917338CA9}.Release|x64.Build.0 = Release|Any CPU
-		{0C439B27-DB27-40C8-B40A-648917338CA9}.Release|x86.ActiveCfg = Release|Any CPU
-		{0C439B27-DB27-40C8-B40A-648917338CA9}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
