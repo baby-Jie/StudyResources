@@ -3,6 +3,7 @@
 *.lib
 *.user
 compiler.xml
+.project
 
 bin/
 obj/
@@ -15,3 +16,6 @@ packages/
 out/
 target/
 packages/
+.gradle/
+build
+
