@@ -1,0 +1,53 @@
+﻿<Window x:Class="EnglishPlans.Views.ReviewWin"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:wCommonTools="clr-namespace:WpfLib.WCommonTools;assembly=WpfLib"
+        xmlns:local="clr-namespace:EnglishPlans.Views"
+        wCommonTools:AttachManager.Transparent="True"
+        mc:Ignorable="d"
+        DataContext="{Binding ReviewViewModel, Source={StaticResource Locator}}"
+        Title="ReviewWin"
+        Height="600"
+        Width="800">
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome CaptionHeight="10"></WindowChrome>
+    </WindowChrome.WindowChrome>
+
+    <Border Background="{StaticResource MainBackBrush}"
+            CornerRadius="20">
+        <Grid Margin="10">
+            <Grid.RowDefinitions>
+                <RowDefinition></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <Grid x:Name="HoldContainer">
+                <ListBox x:Name="EnglishListBox"
+                         BorderThickness="0"
+                         Background="{x:Null}"
+                         ItemContainerStyle="{StaticResource ExpandListBoxItemStyle}"
+                         ItemsSource="{Binding EnglishWords}">
+
+                    <ListBox.GroupStyle>
+                        <GroupStyle ContainerStyle="{StaticResource GroupHeaderStyle}">
+                        </GroupStyle>
+                    </ListBox.GroupStyle>
+                </ListBox>
+            </Grid>
+
+            <Grid Grid.Row="1">
+                <StackPanel Orientation="Horizontal"
+                            HorizontalAlignment="Right">
+
+                    <Button x:Name="CloseBtn"
+                            Content="Close"
+                            Margin="20 0"
+                            Click="CloseBtn_OnClick" />
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Border>
+</Window>

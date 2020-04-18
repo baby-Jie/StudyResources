@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smx.springintergrations.model.entity.mapper.CustomerUserMapper">
+
+    <!--配置映射-->
+    <resultMap id="BaseResultMap" type="com.smx.springintergrations.model.entity.domain.CustomerUser">
+        <id property="userId" column="user_id"></id>
+        <result property="userName" column="user_name"></result>
+    </resultMap>
+</mapper>

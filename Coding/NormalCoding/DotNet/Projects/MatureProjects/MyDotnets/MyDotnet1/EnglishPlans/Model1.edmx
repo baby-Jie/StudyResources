@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="mainModel.Store" Provider="System.Data.SQLite.EF6" ProviderManifestToken="Data Source=D:\Files\Study\Projects\Gits\Markdowns\StudyResources\Coding\NormalCoding\DotNet\Projects\MatureProjects\MyDotnets\MyDotnet1\EnglishPlans\bin\Debug\english.db" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="english">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="integer" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="word" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="commentary" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="sentence" Type="nvarchar" MaxLength="200" />
+          <Property Name="review_turn" Type="int" Nullable="false" />
+          <Property Name="create_time" Type="datetime" Nullable="false" />
+          <Property Name="last_review_time" Type="datetime" Nullable="false" />
+          <Property Name="next_review_time" Type="datetime" Nullable="false" />
+          <Property Name="delete_flag" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="mainModelStoreContainer">
+          <EntitySet Name="english" EntityType="Self.english" store:Type="Tables" />
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="mainModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="english">
+          <Key>
+            <PropertyRef Name="id" />
+          </Key>
+          <Property Name="id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="word" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="commentary" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="sentence" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="review_turn" Type="Int32" Nullable="false" />
+          <Property Name="create_time" Type="DateTime" Nullable="false" />
+          <Property Name="last_review_time" Type="DateTime" Nullable="false" />
+          <Property Name="next_review_time" Type="DateTime" Nullable="false" />
+          <Property Name="delete_flag" Type="Int32" Nullable="false" />
+        </EntityType>
+        <EntityContainer Name="mainEntities1" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="english" EntityType="Self.english" />
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="mainModelStoreContainer" CdmEntityContainer="mainEntities1">
+          <EntitySetMapping Name="english">
+            <EntityTypeMapping TypeName="mainModel.english">
+              <MappingFragment StoreEntitySet="english">
+                <ScalarProperty Name="id" ColumnName="id" />
+                <ScalarProperty Name="word" ColumnName="word" />
+                <ScalarProperty Name="commentary" ColumnName="commentary" />
+                <ScalarProperty Name="sentence" ColumnName="sentence" />
+                <ScalarProperty Name="review_turn" ColumnName="review_turn" />
+                <ScalarProperty Name="create_time" ColumnName="create_time" />
+                <ScalarProperty Name="last_review_time" ColumnName="last_review_time" />
+                <ScalarProperty Name="next_review_time" ColumnName="next_review_time" />
+                <ScalarProperty Name="delete_flag" ColumnName="delete_flag" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="无" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

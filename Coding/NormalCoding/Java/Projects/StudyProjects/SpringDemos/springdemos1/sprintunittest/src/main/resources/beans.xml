@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/util
+        http://www.springframework.org/schema/util/spring-util.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/jee
+        http://www.springframework.org/schema/jee/spring-jee.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <!--扫描-->
+    <context:component-scan base-package="com.smx.springunittest"></context:component-scan>
+
+    <!-- 配置spring开启注解AOP的支持-->
+    <aop:aspectj-autoproxy></aop:aspectj-autoproxy>
+
+    <!-- 配置数据源 -->
+    <!--    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">-->
+    <!--        <property name="driverClass" value="com.mysql.cj.jdbc.Driver"></property>-->
+    <!--        <property name="jdbcUrl"-->
+    <!--                  value="jdbc:mysql://localhost:3306/test_db?serverTimezone=UTC&amp;useSSL=false"></property>-->
+    <!--        <property name="user" value="root"></property>-->
+    <!--        <property name="password" value="mysql"></property>-->
+    <!--    </bean>-->
+
+    <!--配置QueryRunner-->
+    <!--    <bean id="runner" class="org.apache.commons.dbutils.QueryRunner" scope="prototype">-->
+    <!--        &lt;!&ndash;注入数据源&ndash;&gt;-->
+    <!--        <constructor-arg name="ds" ref="dataSource"></constructor-arg>-->
+    <!--    </bean>-->
+
+    <!-- 配置dao-->
+    <!--        <bean name="userDao" class="com.smx.springunittest.dao.UserDao"-->
+    <!--              p:queryRunner-ref="runner"></bean>-->
+
+    <!--  配置service-->
+    <!--        <bean name="userService"-->
+    <!--              class="com.smx.springunittest.service.UserService"-->
+    <!--              p:userDao-ref="userDao">-->
+    <!--        </bean>-->
+
+    <!--        <bean class="com.smx.springunittest.model.Student"-->
+    <!--              id="student"-->
+    <!--              p:id="18"-->
+    <!--              p:name="smx">-->
+    <!--        </bean>-->
+
+    <!-- 配置Logger类 -->
+    <bean id="logger" class="com.smx.springunittest.util.Logger"></bean>
+
+    <!--    配置TestService类-->
+    <!--    <bean id="testService" class="com.smx.springunittest.service.TestService"></bean>-->
+
+    <!--配置AOP-->
+    <aop:config>
+
+        <!--切入点表达式-->
+        <aop:pointcut id="pt1" expression="execution(* com.smx.springunittest.service.TestService.*(..))"/>
+
+        <!--配置切面 -->
+        <aop:aspect id="logAdvice" ref="logger">
+            <!-- 配置通知的类型，并且建立通知方法和切入点方法的关联-->
+            <aop:before method="beforeMethodInvoke"
+                        pointcut="execution(* com.smx.springunittest.service.TestService.*(..))"></aop:before>
+
+            <!--在方法调用后执行-->
+            <aop:after method="afterMethodInvoke"
+                       pointcut="execution(* com.smx.springunittest.service.TestService.*(..))"></aop:after>
+
+            <!--在方法返回后执行-->
+            <aop:after-returning method="afterReturn"
+                                 pointcut="execution(* com.smx.springunittest.service.TestService.*(..))"></aop:after-returning>
+
+            <!--在方法抛出异常后执行-->
+            <aop:after-throwing method="afterThrow"
+                                pointcut="execution(* com.smx.springunittest.service.TestService.*(..))"></aop:after-throwing>
+
+            <!-- 在调用函数后调用-->
+            <aop:around method="aroundMethodInvoke"
+                        pointcut-ref="pt1"></aop:around>
+        </aop:aspect>
+    </aop:config>
+
+</beans>

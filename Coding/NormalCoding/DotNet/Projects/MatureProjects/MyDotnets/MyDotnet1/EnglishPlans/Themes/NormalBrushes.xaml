@@ -1,0 +1,23 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!--icon主色-->
+    <SolidColorBrush x:Key="IconNormalBrush"
+                     Color="Wheat" />
+
+    <!--背景主色-->
+    <SolidColorBrush x:Key="MainBackBrush"
+                     Color="#A0000000" />
+
+    <!--单词主色-->
+    <SolidColorBrush x:Key="WordNormalBrush"
+                     Color="Black" />
+
+    <!--中文翻译主色-->
+    <SolidColorBrush x:Key="CommentaryNormalBrush"
+                     Color="Purple" />
+    <!--句子主色-->
+    <SolidColorBrush x:Key="SentenceNormalBrush"
+                     Color="Black" />
+
+</ResourceDictionary>

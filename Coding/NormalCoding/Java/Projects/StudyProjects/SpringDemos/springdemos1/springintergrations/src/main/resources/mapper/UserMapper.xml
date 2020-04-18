@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smx.springintergrations.model.entity.mapper.UserMapper">
+
+    <!--配置映射-->
+    <resultMap id="userMapper" type="com.smx.mycommonapi.model.User">
+        <id property="userId" column="user_id"></id>
+        <result property="userName" column="user_name"></result>
+    </resultMap>
+
+    <!--配置查询所有-->
+    <select id="findAll" resultMap="userMapper">
+        select * from user;
+    </select>
+
+<!--    <insert id="insertUser" parameterType="user">-->
+<!--        insert into user(username, sex, address) values( #{userName}, #{userSex}, #{userAddress})-->
+<!--    </insert>-->
+</mapper>
