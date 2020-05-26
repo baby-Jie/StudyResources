@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd">
+    <!-- 配置数据源 -->
+<!--    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">-->
+<!--        <property name="driverClass" value="com.mysql.cj.jdbc.Driver"></property>-->
+<!--        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/test?serverTimezone=GMT%2B8"></property>-->
+<!--        <property name="user" value="root"></property>-->
+<!--        <property name="password" value="mysql"></property>-->
+<!--    </bean>-->
+
+    <bean id="user" class="com.smx.model.User" scope="prototype">
+        <property name="userId" value="1"></property>
+        <property name="userName" value="smx"></property>
+    </bean>
+</beans>
