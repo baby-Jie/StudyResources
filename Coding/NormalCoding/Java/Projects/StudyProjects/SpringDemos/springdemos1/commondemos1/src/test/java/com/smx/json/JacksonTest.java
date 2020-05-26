@@ -79,20 +79,20 @@ public class JacksonTest {
     @Test
     public void testAnnotation() throws JsonProcessingException {
 
-        Student student = new Student("smx", 18, 100.5f);
-        Student student1 = new Student("", 19, 1.f);
-        Student student2 = new Student();
-        student2.setAge(18);
-        student2.setScore(2.9f);
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
-        String json = objectMapper.writeValueAsString(student);
-        String json1 = objectMapper.writeValueAsString(student1);
-        String json2 = objectMapper.writeValueAsString(student2);
+//        Student student = new Student("smx", 18, 100.5f);
+//        Student student1 = new Student("", 19, 1.f);
+//        Student student2 = new Student();
+//        student2.setAge(18);
+//        student2.setScore(2.9f);
+//
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
+//        String json = objectMapper.writeValueAsString(student);
+//        String json1 = objectMapper.writeValueAsString(student1);
+//        String json2 = objectMapper.writeValueAsString(student2);
 //        Student deStudent = objectMapper.readValue(json2, Student.class);
 
-        System.out.println(json2);
+//        System.out.println(json2);
     }
 
     // endregion 注解 自定义序列化
@@ -104,14 +104,14 @@ public class JacksonTest {
 
         // 使用Include.Custom 失败 原因未知。
         ObjectMapper objectMapper = new ObjectMapper();
-        Student student = new Student("smx", 180, 100.5f);
+//        Student student = new Student("smx", 180, 100.5f);
 //        SerializationConfig serializationConfig = objectMapper.getSerializationConfig();
 //        serializationConfig.withFeatures(JsonGenerator.Feature.AUTO_CLOSE_TARGET);
 
-        String json = objectMapper.writeValueAsString(student);
+//        String json = objectMapper.writeValueAsString(student);
 
 //        mapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
-        System.out.println(json);
+//        System.out.println(json);
     }
 
     // endregion

@@ -1,6 +1,7 @@
 package com.smx.collection;
 
 import com.smx.mycommonapi.model.User;
+import com.sun.javafx.collections.ImmutableObservableList;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -61,4 +62,17 @@ public class ListTest {
         System.out.println(users);
     }
     // endregion List 最大值 最小值 排序
+
+    @Test
+    public void testAverage(){
+
+        List<Integer> list = new ArrayList<>();
+        list.add(3);
+        list.add(5);
+        list.add(1);
+
+        double average = list.stream().mapToInt(s -> s).average().orElse(0);
+
+        System.out.println(average);
+    }
 }

@@ -1,22 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Forms;
-using System.Windows.Input;
 using System.Windows.Interop;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using ContextMenu = System.Windows.Forms.ContextMenu;
 using MenuItem = System.Windows.Forms.MenuItem;
 
@@ -42,12 +31,15 @@ namespace DeskTopVideo
 
         #endregion Fields	
 
+        #region Constructors
 
         public MainWindow()
         {
             InitializeComponent();
             CustomInitialization();
         }
+
+        #endregion Constructors	
 
         #region LoadAndDispose
 
@@ -87,13 +79,17 @@ namespace DeskTopVideo
         private void LoadInitialization()
         {
             _windowHandle = new WindowInteropHelper(this).Handle;
+            if (_workerwIntPtr != IntPtr.Zero)
+            {
+                int ret = SetParent(_windowHandle, _workerwIntPtr);
+            }
 
             // 根据名称找到一个window
-            IntPtr windowPtr = FindWindow(null, "Program Manager");
-            if (windowPtr != IntPtr.Zero)
-            {
-                int ret = SetParent(_windowHandle, windowPtr);
-            }
+            //IntPtr windowPtr = FindWindow(null, "Program Manager");
+            //if (windowPtr != IntPtr.Zero)
+            //{
+            //    int ret = SetParent(_windowHandle, windowPtr);
+            //}
         }
 
         /// <summary>
@@ -113,14 +109,34 @@ namespace DeskTopVideo
                 Process.GetCurrentProcess().Kill();
             };
 
-            MenuItem testMenuItem = new MenuItem();
-            testMenuItem.Text = "Mute";
-            testMenuItem.Click += (sender, args) =>
+            MenuItem muteItem = new MenuItem();
+            muteItem.Text = "Mute";
+            muteItem.Click += (sender, args) =>
             {
                 VideoPlayer.IsMuted = !VideoPlayer.IsMuted;
             };
+
+            MenuItem loadItem = new MenuItem();
+            loadItem.Text = "加载";
+            loadItem.Click += (sender, args) =>
+            {
+                OpenFileDialog dialog = new OpenFileDialog();
+                dialog.Filter = "mp4|*.mp4";
+                var ret = dialog.ShowDialog();
+
+                if (ret == System.Windows.Forms.DialogResult.OK)
+                {
+                    string filePath = dialog.FileName;
+                    VideoPlayer.Stop();
+                    VideoPlayer.Source = new Uri(filePath, UriKind.Absolute);
+                    VideoPlayer.Position = new TimeSpan(0, 0, 0);
+                    VideoPlayer.Play();
+                }
+            };
+
             contextMenu.MenuItems.Add(menuItem);
-            contextMenu.MenuItems.Add(testMenuItem);
+            contextMenu.MenuItems.Add(muteItem);
+            contextMenu.MenuItems.Add(loadItem);
             _notifyIcon.ContextMenu = contextMenu;
         }
 
@@ -134,6 +150,10 @@ namespace DeskTopVideo
             };
         }
 
+        #endregion LoadAndDispose
+
+        #region Methods
+
         public delegate bool EnumWindowsProc(IntPtr hWnd, int lParam);
 
         public bool ADA_EnumWindowsProc(IntPtr hWnd, int lParam)
@@ -144,7 +164,10 @@ namespace DeskTopVideo
             {
                 _workerwIntPtr = FindWindowEx(IntPtr.Zero, hWnd, "WorkerW", null);
 
-                ShowWindow(_workerwIntPtr, 0);
+                if (_workerwIntPtr != IntPtr.Zero)
+                {
+                    ShowWindow(_workerwIntPtr, 0);
+                }
             }
             return true;
         }
@@ -153,8 +176,9 @@ namespace DeskTopVideo
         [DllImport("user32.dll")]
         private static extern int EnumWindows(EnumWindowsProc ewp, int lParam);
 
-        #endregion LoadAndDispose
+        #endregion Methods	
 
+        #region Native Methods
 
         [DllImport("user32.dll", EntryPoint = "FindWindow")]
         public extern static IntPtr FindWindow(string lpClassName, string lpWindowName);
@@ -174,5 +198,8 @@ namespace DeskTopVideo
 
         [DllImport("user32.dll")]
         public static extern IntPtr GetParent(IntPtr handle);
+
+        #endregion Native Methods	
+
     }
 }

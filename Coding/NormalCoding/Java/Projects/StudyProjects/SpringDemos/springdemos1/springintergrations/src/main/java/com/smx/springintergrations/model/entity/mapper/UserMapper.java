@@ -8,5 +8,9 @@ import java.util.List;
 @Mapper
 public interface UserMapper {
 
-    public List<User> findAll();
+    List<User> findAll();
+
+    void insert(User user);
+
+    void insertUserBatch(List<User> userList);
 }

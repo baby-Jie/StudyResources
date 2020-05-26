@@ -24,6 +24,8 @@ public class Student implements  Comparable<Student>{
 
     public void test(){}
 
+    public int testInt;
+
     @Override
     public int compareTo(Student o) {
         return this.getAge() - o.getAge();

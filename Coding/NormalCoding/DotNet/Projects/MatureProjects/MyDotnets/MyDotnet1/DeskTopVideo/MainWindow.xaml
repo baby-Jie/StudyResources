@@ -10,11 +10,23 @@
         WindowStyle="None"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
         <MediaElement x:Name="VideoPlayer"
                       Stretch="UniformToFill"
                       Source="desktop.mp4">
 
         </MediaElement>
+
+        <!--<Grid Row="1">
+            <Button x:Name="TestBtn"
+                    Content="Test"
+                    Height="100"
+                    HorizontalAlignment="Center"
+                    Click="TestBtn_OnClick"></Button>
+        </Grid>-->
 
     </Grid>
 </Window>

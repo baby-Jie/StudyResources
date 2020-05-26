@@ -2,14 +2,16 @@ package com.smx.mycommonapi.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Data
 public class Account {
 
-    private int id;
+    private Integer accountId;
 
-    private String name;
+    private String accountName;
 
-    private float money;
+    private Double accountMoney;
 }

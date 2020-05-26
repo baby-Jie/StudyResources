@@ -1,6 +1,5 @@
 package com.smx.springintergrations.configuation;
 
-import com.smx.mycommonapi.model.Account;
 import com.smx.mycommonapi.model.User;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

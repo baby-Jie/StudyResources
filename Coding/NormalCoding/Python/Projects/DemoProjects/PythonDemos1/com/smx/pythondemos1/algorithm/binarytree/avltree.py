@@ -5,64 +5,63 @@ class AVLTree(object):
         self.right = None
         pass
 
-    def left_single_rotate(self):
+    def left_single_rotate(self, treeNode):
         """左单旋转"""
-        pass
+        rightNode = treeNode.right
+        treeNode.right = rightNode.left
+        rightNode.left = treeNode
+        return rightNode
 
-    def right_single_rotate(self):
+    def right_single_rotate(self, treeNode):
         """右单旋转"""
-        pass
 
-    def left_right_rotate(self):
+        leftNode = treeNode.left
+        treeNode.left = leftNode.right
+        leftNode.right = treeNode
+
+        return leftNode
+
+    def left_right_rotate(self, treeNode):
         """左右旋转"""
-        pass
+        treeNode.left  = self.left_single_rotate(treeNode.left)
+        return self.right_single_rotate(treeNode)
 
-    def right_left_rotate(self):
+    def right_left_rotate(self, treeNode):
         """右左旋转"""
-        pass
+        treeNode.right = self.right_single_rotate(treeNode.right)
+        return self.left_single_rotate(treeNode)
 
 
 
-    def add(self, insertVal):
+    def add(self, root, insertVal):
 
         """
         给avl树添加节点
         :param insertVal:添加的节点的值。
         :return:
         """
+        if root == None:
+            root = AVLTree(insertVal)
 
-        if insertVal > self.val:
+        if insertVal > root.val:
             # 大的放右边
-            if self.right:
-                self.right = self.right.add(insertVal)
-            else:
-                self.right = AVLTree(insertVal)
+            root.right = self.add(root.right, insertVal)
+            if self.get_tree_height(root.right) - self.get_tree_height(root.left) == 2:
+                if insertVal > root.right.val:
+                    # 右子树的右边 左单旋转
+                    root = self.left_single_rotate(root)
+                else:
+                    root = self.right_left_rotate(root)
         elif insertVal < self.val:
             # 小的放做左边
-            if self.left:
-                self.left = self.left.add(insertVal)
-            else:
-                self.left = AVLTree(insertVal)
-
-        leftLen = self.get_tree_height(self.left) # 左子树的高度
-        rightLen = self.get_tree_height(self.right) # 右子树的高度
-
-        # 调整二叉树以达到平衡
-        if abs(leftLen - rightLen) >= 2:
-            if rightLen > leftLen:
-                if insertVal > self.right.val:
-                    # 在右子树的右边
-                    pass
+            root.left = self.add(root.left, insertVal)
+            if self.get_tree_height(root.left) - self.get_tree_height(root.right) == 2:
+                if insertVal < root.left.val:
+                    # 左子树的左边 右单旋转
+                    root = self.right_single_rotate(root)
                 else:
-                    # 在右子树的左边
-                    pass
-            else:
-                if insertVal > self.left.val:
-                    # 在左子树的右边
-                    pass
-                else:
-                    # 在左子树的左边
-                    pass
+                    root = self.right_left_rotate(root)
+        return root
 
     def remove(self, delVal):
 

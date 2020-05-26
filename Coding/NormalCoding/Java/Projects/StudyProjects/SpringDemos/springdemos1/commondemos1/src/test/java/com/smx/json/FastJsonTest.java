@@ -11,7 +11,7 @@ public class FastJsonTest {
     public void testSerialization(){
 
         ObjectMapper objectMapper = new ObjectMapper();
-        Student student = new Student("smx", 1, 100.1f);
+//        Student student = new Student("smx", 1, 100.1f);
     }
 
     // endregion 序列化

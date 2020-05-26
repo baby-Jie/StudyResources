@@ -1,12 +1,10 @@
 package com.smx.springintergrations.annotation;
 
 import com.smx.springintergrations.SpringintergrationsApplication;
-import com.smx.mycommonapi.model.Account;
 import com.smx.mycommonapi.model.User;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 

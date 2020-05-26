@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.smx.springintergrations.model.entity.mapper.AccountMapper">
+
+    <!--配置查询所有-->
+    <select id="findAll" resultType="com.smx.mycommonapi.model.Account">
+        select account_id as accountId, account_name as accountName, account_money as accountMoney from account;
+    </select>
+
+    <select id="findSpecific" resultType="com.smx.mycommonapi.model.Account"
+            parameterType="com.smx.mycommonapi.model.Account">
+        <bind name="pattern" value="'%' + accountName + '%'"/>
+        select account_id as accountId, account_name as accountName, account_money as accountMoney from account
+        where account_name like '${accountName}';
+    </select>
+
+    <select id="findSpecificOrderBy" resultType="com.smx.mycommonapi.model.Account">
+        select account_id as accountId, account_name as accountName, account_money as accountMoney from account
+        <if test="isName =='asc' or isName == 'ASC'">
+            order by accountName asc;
+        </if>
+        <if test="isName =='desc' or isName == 'DESC'">
+            order by accountName desc;
+        </if>
+    </select>
+
+    <select id="findConcat" resultType="com.smx.mycommonapi.model.Account">
+         select account_id as accountId, account_name as accountName, account_money as accountMoney from account
+        where account_name like concat(#{name}, '%');
+    </select>
+
+    <select id="testBind" resultType="com.smx.mycommonapi.model.Account">
+        <bind name="pattern1" value="sortColumn"></bind>
+         select account_id as accountId, account_name as accountName, account_money as accountMoney from account
+        order by #{sortColumn} ${sortRule};
+    </select>
+
+    <select id="testIf" resultType="com.smx.mycommonapi.model.Account">
+        select account_id as accountId, account_name as accountName, account_money as accountMoney from account
+        order by
+        <if test="'accountName'.equals(sortColumn) or 'accountId'.equals(sortColumn)">
+            <if test="'accountId'.equals(sortColumn)">
+                `account_id`
+            </if>
+            <if test="'accountName'.equals(sortColumn)">
+                `account_name`
+            </if>
+            <if test="'asc'.equalsIgnoreCase(sortBy)">
+                asc
+            </if>
+            <if test="'desc'.equalsIgnoreCase(sortBy)">
+                desc
+            </if>
+            ,
+        </if>
+        account_money asc
+    </select>
+
+</mapper>

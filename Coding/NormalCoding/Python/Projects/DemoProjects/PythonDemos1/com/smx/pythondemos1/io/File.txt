@@ -7,55 +7,55 @@ files/amusement
 files/blend
 
 files/study/coding
-files/study/coding/normalcoding
-files/study/coding/seldomcoding
+files/study/coding/normal
+files/study/coding/seldom
 files/study/coding/computerbasic
 files/study/coding/blend
 
-files/study/coding/normalcoding/cplus
-files/study/coding/normalcoding/dotnet
-files/study/coding/normalcoding/java
-files/study/coding/normalcoding/python
+files/study/coding/normal/cplus
+files/study/coding/normal/dotnet
+files/study/coding/normal/java
+files/study/coding/normal/python
 
-files/study/coding/normalcoding/cplus/tutorial
-files/study/coding/normalcoding/cplus/projects/demoprojects
-files/study/coding/normalcoding/cplus/projects/matureprojects
-files/study/coding/normalcoding/cplus/projects/downloadprojects
-files/study/coding/normalcoding/cplus/documents/teachdocs
-files/study/coding/normalcoding/cplus/documents/querydocs
-files/study/coding/normalcoding/cplus/documents/blend
+files/study/coding/normal/cplus/tutorial
+files/study/coding/normal/cplus/projects/demoprojects
+files/study/coding/normal/cplus/projects/matureprojects
+files/study/coding/normal/cplus/projects/downloadprojects
+files/study/coding/normal/cplus/documents/teachdocs
+files/study/coding/normal/cplus/documents/querydocs
+files/study/coding/normal/cplus/documents/blend
 
-files/study/coding/normalcoding/dotnet/tutorial
-files/study/coding/normalcoding/dotnet/projects/demoprojects
-files/study/coding/normalcoding/dotnet/projects/matureprojects
-files/study/coding/normalcoding/dotnet/projects/downloadprojects
-files/study/coding/normalcoding/dotnet/documents/teachdocs
-files/study/coding/normalcoding/dotnet/documents/querydocs
-files/study/coding/normalcoding/dotnet/documents/blend
+files/study/coding/normal/dotnet/tutorial
+files/study/coding/normal/dotnet/projects/demoprojects
+files/study/coding/normal/dotnet/projects/matureprojects
+files/study/coding/normal/dotnet/projects/downloadprojects
+files/study/coding/normal/dotnet/documents/teachdocs
+files/study/coding/normal/dotnet/documents/querydocs
+files/study/coding/normal/dotnet/documents/blend
 
-files/study/coding/normalcoding/java/tutorial
-files/study/coding/normalcoding/java/projects/demoprojects
-files/study/coding/normalcoding/java/projects/matureprojects
-files/study/coding/normalcoding/java/projects/downloadprojects
-files/study/coding/normalcoding/java/documents/teachdocs
-files/study/coding/normalcoding/java/documents/querydocs
-files/study/coding/normalcoding/java/documents/blend
+files/study/coding/normal/java/tutorial
+files/study/coding/normal/java/projects/demoprojects
+files/study/coding/normal/java/projects/matureprojects
+files/study/coding/normal/java/projects/downloadprojects
+files/study/coding/normal/java/documents/teachdocs
+files/study/coding/normal/java/documents/querydocs
+files/study/coding/normal/java/documents/blend
 
-files/study/coding/normalcoding/python/tutorial
-files/study/coding/normalcoding/python/projects/demoprojects
-files/study/coding/normalcoding/python/projects/matureprojects
-files/study/coding/normalcoding/python/projects/downloadprojects
-files/study/coding/normalcoding/python/documents/teachdocs
-files/study/coding/normalcoding/python/documents/querydocs
-files/study/coding/normalcoding/python/documents/blend
+files/study/coding/normal/python/tutorial
+files/study/coding/normal/python/projects/demoprojects
+files/study/coding/normal/python/projects/matureprojects
+files/study/coding/normal/python/projects/downloadprojects
+files/study/coding/normal/python/documents/teachdocs
+files/study/coding/normal/python/documents/querydocs
+files/study/coding/normal/python/documents/blend
 
-files/study/coding/seldomcoding/web/tutorial
-files/study/coding/seldomcoding/web/projects/demoprojects
-files/study/coding/seldomcoding/web/projects/matureprojects
-files/study/coding/seldomcoding/web/projects/downloadprojects
-files/study/coding/seldomcoding/web/documents/teachdocs
-files/study/coding/seldomcoding/web/documents/querydocs
-files/study/coding/seldomcoding/web/documents/blend
+files/study/coding/seldom/web/tutorial
+files/study/coding/seldom/web/projects/demoprojects
+files/study/coding/seldom/web/projects/matureprojects
+files/study/coding/seldom/web/projects/downloadprojects
+files/study/coding/seldom/web/documents/teachdocs
+files/study/coding/seldom/web/documents/querydocs
+files/study/coding/seldom/web/documents/blend
 
 files/study/coding/computerbasic/windows
 files/study/coding/computerbasic/linux
@@ -68,8 +68,9 @@ files/amusement/media/images
 files/amusement/media/videos
 files/amusement/documents
 
-files/work/documents/java
-files/work/documents/dotnet
+files/work/java
+files/work/dotnet
+files/work/documents
 files/work/media/images
 files/work/media/videos
 files/work/test
@@ -88,12 +89,3 @@ files/blend/receive
 files/blend/softwares/greenversions
 files/blend/softwares/packages
 files/blend/temp
-
-
-
-
-
-
-
-
-

@@ -9,6 +9,7 @@ namespace WindowLib.Methods
 {
     public static class WinMethod
     {
+        #region Window Relations
 
         #region GetWindowLong 获取指定窗口的有关信息
 
@@ -54,13 +55,54 @@ namespace WindowLib.Methods
 
         #endregion SetWindowPos	
 
+        #region ShowWindow 显示或者隐藏窗口
+
+        /// <summary>
+        /// 显示Window
+        /// </summary>
+        /// <param name="hWnd"></param>
+        /// <param name="nCmdShow"></param>
+        /// <returns></returns>
         [DllImport("user32.dll")]
         public static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
 
+        #endregion 显示或者隐藏窗口	
 
+        #region FindWindow 查找window
+
+        [DllImport("user32.dll", EntryPoint = "FindWindow")]
+        public extern static IntPtr FindWindow(string lpClassName, string lpWindowName);
+
+        /// <summary>
+        /// 查找window
+        /// </summary>
+        /// <param name="hwndParent"></param>
+        /// <param name="hwndChildAfter"></param>
+        /// <param name="lpszClass"></param>
+        /// <param name="lpszWindow"></param>
+        /// <returns></returns>
         [DllImport("user32.dll", SetLastError = true)]
         public static extern IntPtr FindWindowEx(IntPtr hwndParent, IntPtr hwndChildAfter, string lpszClass, string lpszWindow);
 
+        #endregion FindWindow	
 
+        #region EnumWindows 列举窗口
+
+        public delegate bool EnumWindowsProc(IntPtr hWnd, int lParam);
+
+        //EnumWindows函数，EnumWindowsProc 为处理函数
+        [DllImport("user32.dll")]
+        private static extern int EnumWindows(EnumWindowsProc ewp, int lParam);
+
+        #endregion EnumWindows	
+
+        #region GetParent 获取窗口的父窗口
+
+        [DllImport("user32.dll")]
+        public static extern IntPtr GetParent(IntPtr handle);
+
+        #endregion 获取窗口的父窗口	
+
+        #endregion Window Relations	
     }
 }
