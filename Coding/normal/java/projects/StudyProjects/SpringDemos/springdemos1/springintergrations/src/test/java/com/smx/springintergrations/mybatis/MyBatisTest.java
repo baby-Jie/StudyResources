@@ -39,7 +39,7 @@ public class MyBatisTest {
     @Test
     public void testConcat(){
 
-        List<Account> accountList = accountMapper.findConcat("smx");
+        List<Account> accountList = accountMapper.findConcat("mx");
         System.out.println(accountList);
     }
 
@@ -62,7 +62,7 @@ public class MyBatisTest {
 
         Account account = new Account();
 //        account.setAccountName("haah' or 1 = 1 or account_name = '1"); // sql注入
-        account.setAccountName("smx' or 1 = 1 or account_name = '1"); // sql注入
+//        account.setAccountName("smx' or 1 = 1 or account_name = '1"); // sql注入
         List<Account> accounts = accountMapper.findSpecific(account);
 
         System.out.println(accounts);

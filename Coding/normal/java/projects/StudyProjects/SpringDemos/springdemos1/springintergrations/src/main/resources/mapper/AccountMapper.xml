@@ -15,10 +15,10 @@
             <bind name="pattern" value="'%' + accountName + '%'"/>
         </if>
         <if test="accountName == null">
-            <bind name="pattern" value="'%' + '%'"/>
+            <bind name="pattern" value="'%'"/>
         </if>
         select account_id as accountId, account_name as accountName, account_money as accountMoney from account
-        where account_name like #{pattern};
+        where account_name like '%${accountName}%';
     </select>
 
     <select id="findSpecificOrderBy" resultType="com.smx.mycommonapi.model.Account">
@@ -33,7 +33,7 @@
 
     <select id="findConcat" resultType="com.smx.mycommonapi.model.Account">
          select account_id as accountId, account_name as accountName, account_money as accountMoney from account
-        where account_name like concat(#{name}, '%');
+        where account_name like concat('%', #{name});
     </select>
 
     <select id="testBind" resultType="com.smx.mycommonapi.model.Account">

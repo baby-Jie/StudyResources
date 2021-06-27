@@ -1,7 +1,10 @@
 
-a, b = 1, 2
-print(type(a))
-print(a)
+def fun1():
+    a = 1
+    def inner():
+        nonlocal a
+        a = 10 + a
+    inner()
+    print(a)
 
-li = [1, 2, 3]
-print(li[a])
+fun1()

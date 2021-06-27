@@ -23,6 +23,30 @@ import java.util.stream.Collectors;
 public class TempTest {
 
     @Test
+    public void testDouble(){
+
+        double x = 0d;
+        int a = 0;
+        x += a;
+        if (x == 0D){
+            System.out.println("yes");
+        } else {
+            System.out.println("no");
+        }
+
+//        double d = 12.55;
+//        System.out.println(d);
+//        String val1 = new BigDecimal(d).setScale(1).toString();
+//        System.out.println(val1); // 12.0
+//
+//        String val2 = new BigDecimal(d).setScale(1, BigDecimal.ROUND_HALF_UP).stripTrailingZeros().toPlainString();
+//        System.out.println(val2); // 12
+//
+//        String val3 = String.valueOf(Math.round(d * 10) / 10.0);
+//        System.out.println(val3); // 12.0
+    }
+
+    @Test
     public void test(){
 
         System.out.println("1".equals(null));
